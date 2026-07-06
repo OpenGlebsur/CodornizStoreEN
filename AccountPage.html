@@ -2,7 +2,7 @@
 <html xmlns="http://w3.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Mi Cuenta Microsoft - CodornizStore</title>
+    <title>My Microsoft Account - CodornizStore</title>
     <link href="//Microsoft.WinJS.2.0/css/ui-dark.css" rel="stylesheet" />
     <script src="//Microsoft.WinJS.2.0/js/base.js"></script>
     <script src="//Microsoft.WinJS.2.0/js/ui.js"></script>
@@ -28,24 +28,24 @@
     <div id="topbar">
         <img src="images/codorniz.png" class="topbar-codorniz-logo" onclick="window.location.href='default.html'">
         <div class="store-brand" onclick="window.location.href='default.html'">CodornizStore</div>
-        <div class="page-title" onclick="window.location.href='AllApps.html'">Aplicaciones</div>
-        <div class="page-title" onclick="window.location.href='ChartsPage.html'">Tendencias</div>
-        <div class="page-title active-title" onclick="window.location.href='AccountPage.html'">Mi Cuenta</div>
+        <div class="page-title" onclick="window.location.href='AllApps.html'">Apps</div>
+        <div class="page-title" onclick="window.location.href='ChartsPage.html'">Trending</div>
+        <div class="page-title active-title" onclick="window.location.href='AccountPage.html'">My Account</div>
     </div>
 
     <div id="content">
-        <h1 class="hub-title">Configuración de la cuenta</h1>
+        <h1 class="hub-title">Account Settings</h1>
         
-        <!-- PANEL DE ADAPTACIÓN AUTOMÁTICA: Las etiquetas cambian solas según el Windows del usuario -->
+        <!-- AUTO-ADAPTATION PANEL: Labels change automatically based on the user's Windows -->
         <div class="profile-container">
             <div class="avatar-box" id="user-initial">U</div>
             <div class="profile-info">
-                <h2 id="user-type-label">Cargando Cuenta...</h2>
-                <p><strong>Nombre de perfil:</strong> <span id="user-display-name">Buscando nombre...</span></p>
-                <p><strong>Correo asociado:</strong> <span id="user-email-address">Iniciando sesión...</span></p>
-                <p><strong>Ecosistema de Red:</strong> CodornizCorp Hibrid Server</p>
-                <p><strong>Estado del Servidor:</strong> Sincronizado vía GitHub CDN</p>
-                <div class="tag-badge" id="user-tier-badge">Suscriptor Store</div>
+                <h2 id="user-type-label">Loading Account...</h2>
+                <p><strong>Profile Name:</strong> <span id="user-display-name">Looking for name...</span></p>
+                <p><strong>Associated Email:</strong> <span id="user-email-address">Signing in...</span></p>
+                <p><strong>Network Ecosystem:</strong> CodornizCorp Hybrid Server</p>
+                <p><strong>Server Status:</strong> Synchronized via GitHub CDN</p>
+                <div class="tag-badge" id="user-tier-badge">Store Subscriber</div>
             </div>
         </div>
     </div>
@@ -57,50 +57,50 @@
             var inicialBox = document.getElementById("user-initial");
             var badgeBox = document.getElementById("user-tier-badge");
 
-            /* INYECTOR APIS NATIVAS WINRT: Chupa los datos reales del usuario logueado en Windows 10 */
+            /* NATIVE WINRT API INJECTOR: Fetches real user data from logged-in Windows 10 */
             if (typeof Windows !== 'undefined' && Windows.System && Windows.System.UserProfile) {
                 try {
                     var userProfile = Windows.System.UserProfile;
                     
-                    // Extrae el nombre para mostrar de Windows 10
+                    // Get display name from Windows 10
                     userProfile.getDisplayNameAsync().then(function (name) {
                         if (name) {
                             nombreBox.innerText = name;
                             inicialBox.innerText = name.charAt(0).toUpperCase();
                         } else {
-                            nombreBox.innerText = "Usuario de Windows 10";
+                            nombreBox.innerText = "Windows 10 User";
                         }
                     });
 
-                    // Extrae el correo principal de la cuenta Microsoft vinculada
+                    // Get main email from linked Microsoft account
                     userProfile.getDomainNameAsync().then(function (domain) {
                         if (domain) {
                             emailBox.innerText = domain;
                         } else {
-                            emailBox.innerText = "Cuenta local de Windows";
+                            emailBox.innerText = "Local Windows Account";
                         }
                     });
 
-                    labelTipo.innerText = "Cuenta de Microsoft Activa";
-                    badgeBox.innerText = "Desarrollador Codorniz Oro";
+                    labelTipo.innerText = "Active Microsoft Account";
+                    badgeBox.innerText = "Codorniz Gold Developer";
                     badgeBox.style.background = "#228B22";
 
                 } catch (e) {
-                    // Control de fallos de inicialización del WinRT
-                    labelTipo.innerText = "Usuario Invitado Store";
-                    nombreBox.innerText = "Usuario Local Desconectado";
-                    emailBox.innerText = "cuenta@codornizstore.local";
+                    // Handle WinRT initialization failures
+                    labelTipo.innerText = "Store Guest User";
+                    nombreBox.innerText = "Disconnected Local User";
+                    emailBox.innerText = "account@codornizstore.local";
                 }
             } else {
-                /* CONTADOR CHROME WEB: Si se ejecuta en navegador, simula un perfil limpio genérico */
-                labelTipo.innerText = "Cuenta Microsoft (Modo Web)";
-                nombreBox.innerText = "Usuario Externo de Internet";
-                emailBox.innerText = "usuario.web@outlook.com";
+                /* CHROME WEB COUNTER: If running in a browser, simulates a generic clean profile */
+                labelTipo.innerText = "Microsoft Account (Web Mode)";
+                nombreBox.innerText = "External Internet User";
+                emailBox.innerText = "web.user@outlook.com";
                 inicialBox.innerText = "W";
-                badgeBox.innerText = "Invitado Público Store";
+                badgeBox.innerText = "Store Public Guest";
             }
 
-            // Dispara la animación de entrada Metro horizontal de forma controlada
+            // Triggers the Metro horizontal entrance animation in a controlled way
             setTimeout(function() {
                 var content = document.getElementById("content");
                 if (content) { content.classList.add("metro-activa"); }
